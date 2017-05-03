@@ -297,6 +297,12 @@ public class JMessaging extends JPanel implements KeyListener
     }
 
     public static Font getOpenSansBold(){
+    	
+    	if(System.getProperty("os.name").equals("Linux"))
+    	{
+    		return new Font("Ubuntu", Font.PLAIN, 15);
+    	}
+    	
         Font x =
                 null;
                 try
@@ -322,6 +328,12 @@ public class JMessaging extends JPanel implements KeyListener
             }
     
     public static Font getOpenSans3(){
+    	
+    	if(System.getProperty("os.name").equals("Linux"))
+    	{
+    		return new Font("Ubuntu", Font.PLAIN, 15);
+    	}
+    	
         Font x =
         null;
         try
@@ -347,6 +359,12 @@ public class JMessaging extends JPanel implements KeyListener
     }
     
     public static Font getOpenSans5(){
+    	
+    	if(System.getProperty("os.name").equals("Linux"))
+    	{
+    		return new Font("Ubuntu", Font.PLAIN, 13);
+    	}
+    	
         Font x =
         null;
         try
@@ -372,6 +390,12 @@ public class JMessaging extends JPanel implements KeyListener
     }
     
     public static Font getOpenSans4(){
+    	
+    	if(System.getProperty("os.name").equals("Linux"))
+    	{
+    		return new Font("Ubuntu", Font.PLAIN, 20);
+    	}
+    	
         Font x =
         null;
         try

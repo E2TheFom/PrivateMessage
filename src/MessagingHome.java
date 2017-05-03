@@ -1,10 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,20 +26,16 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
 
 //Edward Fominykh
 //Program Description
 //Jan 19, 2017
 public class MessagingHome extends JPanel implements Serializable
 {
-    private URL resource = getClass().getResource("gradient-wallpaper-2.jpg");
-    public static Image background;
-    
     public String ip;
     public String port;
     public JFrame f;
-    private JPanel p;
+    public JPanel p;
     private JPanel top;
     private JPanel textingPanel;
     private JPanel NameDisplay;
@@ -59,12 +51,13 @@ public class MessagingHome extends JPanel implements Serializable
     private int PREF_H;
     private ArrayList<ProfileBox> profileBoxes;
     private boolean serverSetupOpen = false;
-    @Override
-	protected void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+    JScrollPane scrollPane;
+//    @Override
+//	protected void paintComponent(Graphics g)
+//    {
+//        super.paintComponent(g);
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.drawImage(background, 0, 0, getWidth(), getHeight(), this);
        // TextBoxOptions.setBounds(0, 0, TextBox.getWidth()/6, TextBox.getHeight());
         
         
@@ -74,7 +67,7 @@ public class MessagingHome extends JPanel implements Serializable
      //   m.setBorder(blackline);
         
 //      g2.drawString("Hello", 500, 200);
-    }
+//    }
 
 //    public void paintSidebar()
 //    {
@@ -115,8 +108,8 @@ public class MessagingHome extends JPanel implements Serializable
         JMessaging.setTaskBarImage(f);
         
         
-        Join.setBackground(Color.white);
-        Create.setBackground(Color.white);
+//        Join.setBackground(Color.white);
+//        Create.setBackground(Color.white);
 //        TrayIcon g = new TrayIcon(trayIcon);
 //        SystemTray tray = SystemTray.getSystemTray();
 //        
@@ -128,14 +121,14 @@ public class MessagingHome extends JPanel implements Serializable
 //		}
         
         
-        try
-        {
-            background = ImageIO.read(resource);
-        } catch (IOException e1)
-        {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+//        try
+//        {
+//            background = ImageIO.read(resource);
+//        } catch (IOException e1)
+//        {
+//            // TODO Auto-generated catch block
+//            e1.printStackTrace();
+//        }
         //p.paintComponents(paint);
         //Graphics2D paint2 = (Graphics2D) paint;
 //        paint2.setColor(Color.white);
@@ -277,7 +270,7 @@ public class MessagingHome extends JPanel implements Serializable
         p.setLayout(new GridLayout(profileBoxes.size(), 1));
         else p.setLayout(new GridLayout(7,1));
         
-        JScrollPane scrollPane = new JScrollPane(p,
+        scrollPane = new JScrollPane(p,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setAlignmentX(LEFT_ALIGNMENT);
@@ -306,9 +299,9 @@ public class MessagingHome extends JPanel implements Serializable
 //            e.printStackTrace();
 //        }
         
-        Settings.setBackground(Color.white);
+//        Settings.setBackground(Color.white);
         Settings.setOpaque(false);
-        Mute.setBackground(Color.white);
+//        Mute.setBackground(Color.white);
         Mute.setOpaque(false);
         
        
@@ -355,21 +348,22 @@ public class MessagingHome extends JPanel implements Serializable
             
         });
         
-        Timer sizeCheck = new Timer(10, new ActionListener(){
+//        Timer sizeCheck = new Timer(10, new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//			    
+//				  p.setPreferredSize(new Dimension(0, profileBoxes.size()*100));
+//			        if (profileBoxes.size()>7)
+//			        p.setLayout(new GridLayout(profileBoxes.size(), 1));
+//			        else p.setLayout(new GridLayout(7,1));
+//			}
+//        	
+//        });
+//        
+//        sizeCheck.start();
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				  p.setPreferredSize(new Dimension(0, profileBoxes.size()*100));
-			        if (profileBoxes.size()>7)
-			        p.setLayout(new GridLayout(profileBoxes.size(), 1));
-			        else p.setLayout(new GridLayout(7,1));
-			}
-        	
-        });
-        
-        sizeCheck.start();
-        
 //        TextBox.setPreferredSize(new Dimension(0, 60));
 //        TextBox.add(new EFPaint(), BorderLayout.);
         textingPanel.setLayout(new BorderLayout());
@@ -512,7 +506,7 @@ public class MessagingHome extends JPanel implements Serializable
 //            t = chat;
 //            t.start();
     		
-    		ProfileBox newBox = new ProfileBox(cs.getImageDirectory(), cs.getName(), "An awesome guy", false, textingPanel, getThis(), new ChatClient(getThis(), cs.getPort(), cs.getName(), cs.Password()));
+    		ProfileBox newBox = new ProfileBox(cs.getImageDirectory(), cs.getName(), "An awesome guy", false, textingPanel, getThis(), new ChatClient(getThis(), cs.getPort(), cs.getName(), cs.Password()), profileBoxes.size());
             profileBoxes.add(newBox);
             newBox.selectThis();
             
@@ -549,7 +543,7 @@ public class MessagingHome extends JPanel implements Serializable
         
             
             try {
-            	ProfileBox newBox = new ProfileBox(ss.getImageDirectory(), ss.getName(), "An awesome guy", true, textingPanel, getThis(), new ChatServer(getThis(), ss.getPort(), ss.getName(), ss.Password()));
+            	ProfileBox newBox = new ProfileBox(ss.getImageDirectory(), ss.getName(), "An awesome guy", true, textingPanel, getThis(), new ChatServer(getThis(), ss.getPort(), ss.getName(), ss.Password()), profileBoxes.size());
               profileBoxes.add(newBox);
 //              Double port1 = Double.parseDouble(port);
               System.out.println("Opening new server on " + ss.getPort());
@@ -592,8 +586,11 @@ public class MessagingHome extends JPanel implements Serializable
     }
     public static void main(String[] args)
     {
-        
-        new MessagingHome("Edward", "12345", new Point(0,0), new Dimension(1000, 800));
+    	
+    	
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter a name to use: ");
+        new MessagingHome(scan.nextLine(), "12345", new Point(0,0), new Dimension(1000, 800));
         
     }
     
@@ -610,8 +607,13 @@ public class MessagingHome extends JPanel implements Serializable
     {
     	for(int i = 0; i < array.size(); i++)
     	{
+    	    try {
     		array.get(i).setSelected(false);
     		array.get(i).chatBox.setVisible(false);
+    	    } catch (Exception e)
+    	    {
+    	        System.out.println("Did not find a profile box");
+    	    }
     	}
     }
 
@@ -653,14 +655,15 @@ public class MessagingHome extends JPanel implements Serializable
         Color color2 = new Color(81, 84, 89);
         for(int i = 0; i < profileBoxes.size(); i++)
         {
+            System.out.println("Profilebox array size: "  +profileBoxes.size());
             profileBoxes.get(i).setBackground(Color.white);
             if(profileBoxes.get(i).isSelected())
             System.out.println(profileBoxes.get(i) + " Is selected");
             if(!profileBoxes.get(i).isSelected())
             {
-            	profileBoxes.get(i).chatBox.setVisible(false );
+            	profileBoxes.get(i).chatBox.setVisible(false);
             	profileBoxes.get(i).setBackground(Color.white);
-            	System.out.println(profileBoxes.get(i)+" Is not fucking selected");
+            	System.out.println(profileBoxes.get(i)+" Is not  selected");
             	profileBoxes.get(i).getNameArea().setBackground(color2);
             	profileBoxes.get(i).getPhotoPanel().setBackground(color2);
             	profileBoxes.get(i).getNameDescription().setBackground(color2);

@@ -13,7 +13,8 @@ public class ChatServer extends Thread {
    private int port;
    private ProfileBox profileBox;
    private String name;
-   private SecurePHI ed;
+   private Encryptor ed;
+   public boolean run = true;
 
 
 //   private String IPAddress;
@@ -23,7 +24,7 @@ public class ChatServer extends Thread {
       this.message = message;
       this.port = Integer.parseInt(port);
       this.name = name;
-      ed = new SecurePHI(MessagingHome.length16(password));
+      ed = new Encryptor(MessagingHome.length16(password));
       
    }
    
@@ -34,7 +35,7 @@ public class ChatServer extends Thread {
 
    @Override
 public void run() {
-      while(true) {
+      while(run) {
          try {
 //        	 JOptionPane.showMessageDialog(null, "Restarted Server");
             System.out.println(port);
@@ -109,6 +110,11 @@ public void run() {
         // TODO Auto-generated catch block
         e.printStackTrace();
     }
+   }
+   
+   public void stopServer()
+   {
+       run = false;
    }
    
 //   public static void main(String [] args) {

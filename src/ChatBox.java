@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -89,7 +90,7 @@ public class ChatBox extends JPanel
         backPanel.setLayout(new BorderLayout());
         backPanel.add(subPanel, BorderLayout.SOUTH);
         subPanel.setBorder(null);
-        subPanel.setBackground(new Color(133, 136, 140));
+        subPanel.setBackground(new Color(40, 40, 40));
         backPanel.setBackground(new Color(133, 136, 140));
         backPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, new Color(40, 40, 40)));
 //        subPanel.setMaximumSize(new Dimension(709, 0));
@@ -99,6 +100,7 @@ public class ChatBox extends JPanel
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanel.setAlignmentX(LEFT_ALIGNMENT);
+        scrollPanel.setBackground(new Color(40, 40, 40));
         scrollPanel.getViewport().setViewPosition(new Point(0,getHeight()-1));
         scrollPanel.setBorder(null);
         
@@ -110,7 +112,11 @@ public class ChatBox extends JPanel
     
     
     public void newMessage(String message, String sentOrRecieved){
-        if(!message.isEmpty()){
+//        message += " ";
+//        if(!(message.substring(':').isEmpty() || message.substring(':').equals(" ")) ){
+//        message.length() == message.indexOf(':')-1
+        if(!(message.length()-1 == message.indexOf(':'))){
+        subPanel.setEnabled(false);
         goUp = true;
         System.out.println("Sub Panel Size: " + subPanel.getSize());
         System.out.println("Chatbox Size:   " + this.getSize());
@@ -127,14 +133,15 @@ public class ChatBox extends JPanel
         JPanel msgPanel = newMessage.panel(this);
         msgPanel.setPreferredSize(new Dimension(0, 100));
         subPanel.add(msgPanel);
-        scrollPanel.getViewport().setViewPosition(new Point(0,getHeight()));
-        for(MessageBubble bubble:messages)
-        {
-            bubble.increase -= 100;
-        }
-        this.setVisible(true);
-        this.revalidate();
-        home.setVisible(true);
+        
+        scrollPanel.getViewport().setViewPosition(new Point(0,getHeight()+10000000));
+//        for(MessageBubble bubble:messages)
+//        {
+//            bubble.increase -= 100;
+//        }
+//        this.setVisible(true);
+//        this.revalidate();
+//        home.setVisible(true);
         messages.add(newMessage);
         System.out.println("Added to a chatbox called: "+profileBox);
 //        for(MessageBubble bubble: messages)
@@ -142,14 +149,16 @@ public class ChatBox extends JPanel
 //            this.add(bubble.panel());
 //        }
 //        for(MessageBubble bubble: messages)
-        this.increase =+ 15;
+//        this.increase =+ 15;
         
-        repaint();
+
         
         if (side.equals("l"))
         {
         	profileBox.NotificationMessage(message);
         }
+        this.setEnabled(true);
+        
         }
 //        if (sentOrRecieved.equals("sent"))
 //            includeName = true;

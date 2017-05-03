@@ -18,7 +18,7 @@ public class ChatClient extends Thread {
    private String port;
    private ProfileBox profileBox;
    private String displayName = "Test Name";
-   private SecurePHI ed;
+   private Encryptor ed;
    
 //   private String IPAddress;
    
@@ -29,7 +29,7 @@ public class ChatClient extends Thread {
       this.port = port;
 //      this.port = Integer.parseInt(port);
       this.IP = IP;
-      this.ed = new SecurePHI(MessagingHome.length16(password));
+      this.ed = new Encryptor(MessagingHome.length16(password));
    
       
       

@@ -28,7 +28,7 @@ public class ProfileBox extends JPanel
     private boolean connected = false;
     private boolean connectionDropped = false;
     public ChatBox chatBox;
-    private MessagingHome home;
+    public MessagingHome home;
     private JPanel photoPanel;
     private JPanel nameDescription;
     private JPanel nameArea;
@@ -38,6 +38,8 @@ public class ProfileBox extends JPanel
     private JLabel nameLabel;
     private ConnectStat connectDot;
     private JPanel sNameDescription;
+    public int index;
+    public Thread t;
 
     @Override
 	public void paintComponent(Graphics g)
@@ -56,15 +58,15 @@ public class ProfileBox extends JPanel
         
     }
 
-    public ProfileBox(String photoDir, String name, String description, boolean b, JPanel textingPanel, MessagingHome home, ChatClient client)
+    public ProfileBox(String photoDir, String name, String description, boolean b, JPanel textingPanel, MessagingHome home, ChatClient client, int index)
     {
         this.home = home;
     	this.b = b;
         this.name = name;
         this.description = description;
         this.nameLabel = new JLabel();
-        
-        connectDot = new ConnectStat();
+        this.index = index;
+        connectDot = new ConnectStat(this);
         client.setProfileBox(this);
         
        
@@ -181,12 +183,12 @@ public class ProfileBox extends JPanel
         }
 //        nameArea.add(nameLabel);
         System.out.println("Name Label: " + nameLabel);
-        Thread t = client;
+        t = client;
         t.start();
         this.client = client;
         nameDescription.add(nameArea, BorderLayout.NORTH);
         
-        connectDot = new ConnectStat();
+        connectDot = new ConnectStat(this);
         
 //      nameDescription.setBackground(Color.red);
       System.out.println("NameDescription Size: "+ nameDescription.getSize());
@@ -242,19 +244,19 @@ public class ProfileBox extends JPanel
 		
 	}
 
-	public ProfileBox(String photoDir, String name, String description, boolean b, JPanel textingPanel, MessagingHome home, ChatServer server)
+	public ProfileBox(String photoDir, String name, String description, boolean b, JPanel textingPanel, MessagingHome home, ChatServer server,int index)
     {
         this.home = home;
     	this.b = b;
         this.name = name;
         this.description = description;
-        
+        this.index = index;
         
 //        this.setSize(new Dimension(280, 80));
         
         URL resource = getClass().getResource("default.png");
         
-        Thread t = server;
+        t = server;
         t.start();
         this.server = server;
         
@@ -351,7 +353,7 @@ public class ProfileBox extends JPanel
         nameArea.add(nameLabel);
         
         nameDescription.add(nameArea, BorderLayout.NORTH);
-        connectDot = new ConnectStat();
+        connectDot = new ConnectStat(this);
         
 //        nameDescription.setBackground(Color.red);
         System.out.println("NameDescription Size: "+ nameDescription.getSize());
@@ -556,6 +558,13 @@ public class ProfileBox extends JPanel
     public void setDotColor(byte i)
     {
         connectDot.status(i);
+    }
+    
+    public void terminate()
+    {
+        server = null;
+        client = null;
+        chatBox = null;
     }
     
     
